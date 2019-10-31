@@ -5,24 +5,7 @@ from admissionsapi.socketserver.go import Go
 host = 'localhost'
 port = 3010
 
-def cb(fut):
-  print('RESULT ----------')
-  (header, body) = fut.result()
-  print('header:')
-  pprint(header)
-  print('')
-  print('body:')
-  pprint(body)
-  print('----------')
 
-token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImNpIjoyMjU0MDgyMCwiZW1haWwiOiJlcmljQG1haWwuY29tIn0sImV4cCI6MTU3MjQ2MzA5Mn0.37RYLjikjTol0wRKfoxMGlIdQe8B2nlUcLDaVkmoOCI'
-
-body = {
-  'ci': 22540820,
-  'email': 'eric@mail.com',
-  
-}
-Go('POST', '/signin', host_port = (host, port), body=body).with_callback(cb)
 
 app = Flask(__name__)
 
@@ -68,27 +51,30 @@ def signUp():
     print("json decodificado, estraccion data name: "+ str(DecoSingUp["student"]['name']))
     return ci + email + phone + name +lastName
 
+def cb(fut):
+    print('RESULT ----------')
+    (header, body) = fut.result()
+    print('header:')
+    pprint(header)
+    print('')
+    print('body:')
+    pprint(body)
+    print('----------')
+
 @app.route('/signIn',methods=['POST'])
-def signIn():
+def signin():
     # create user code will be here !!
     ci = request.form['inputCi']
     email = request.form['inputEmail']
-    # create json for singUp
-    data = {
-       "student":
-           {"ci":ci,
-            "email":email,
-            }
+    body = {
+        'ci': ci,
+        'email':email,
     }
-   
-  
-  
-    jsonSingUp = json.dumps(data)
-    DecoSingUp = json.loads(jsonSingUp)
+    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImNpIjoyMjU0MDgyMCwiZW1haWwiOiJlcmljQG1haWwuY29tIn0sImV4cCI6MTU3MjQ2MzA5Mn0.37RYLjikjTol0wRKfoxMGlIdQe8B2nlUcLDaVkmoOCI'
+    print("conexion")
+    Go('POST', '/signIn', host_port = (host, port), body=body).with_callback(cb)
+    return "conexion"
 
-    print("json: "+ jsonSingUp)
-    print("json decodificado, estraccion data name: "+ str(DecoSingUp["student"]['ci']))
-    return ci + email 
-    
-app.run(debug =True)
+if __name__ == '__main__':
+    app.run(debug =True)
     
