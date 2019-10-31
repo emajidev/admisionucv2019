@@ -2,7 +2,7 @@
 <html lang="en">
  
 <head>
-    <title>Ucv admision 2019</title>
+    <title>Ucv admisión 2019</title>
     <link href="../static/bootstrap4.3/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -25,8 +25,8 @@
                 <nav class="mynav">
                   
                     <ul id="ejm2">
-                        <li><a role="button" id="home">Home</a></li>
-                        <li><a role="button" id="singin">Sesion</a></li>
+                        <li><a role="button" id="home">Inicio</a></li>
+                        <li><a role="button" id="singin">Sesión</a></li>
                         <li><a role="button" id="singup">Registrarse</a></li>
                  
                     </ul>
@@ -214,7 +214,7 @@ function template_home(){
             <div class="container cont-display showhome " >
                 <div class="row justify-content-center align-items-center h-100  ">
                     <div>
-                        <h1 id="titleSlide">Admision </h1>
+                        <h1 id="titleSlide">Admisión </h1>
                         <h1 id="subtitleSlide">2019 </h1>
                     </div>
               </div>         
@@ -247,9 +247,12 @@ function template_singup(){
               </div>
                  
             `;
-            
+          
             return template;
-        }       
+        }  
+        
+       
+
 var template= document.querySelector(".routers");
 const click_home = document.querySelector("#home");
 const click_singin = document.querySelector("#singin");
@@ -264,10 +267,40 @@ click_home.addEventListener("click",function(){
 template.innerHTML=template_home();
 click_singin.addEventListener("click",function(){
     template.innerHTML=template_singin();
+    validationSingIn();
 });
 click_singup.addEventListener("click",function(){
     template.innerHTML=template_singup();
+    validationSingUp();
 });
+
+
+validationSingIn = () => {
+      var pattern = /\d/;
+      const cedula = document.querySelector("#inputCi");
+      cedula.addEventListener("keypress", function(e){
+        if (!pattern.test(String.fromCharCode(e.keyCode)) || this.value.length == 8)
+        e.preventDefault();
+        });
+};
+validationSingUp = () => {
+      var pattern = /\d/;
+      const cedula = document.querySelector("#inputCi");
+      cedula.addEventListener("keypress", function(e){
+        if (!pattern.test(String.fromCharCode(e.keyCode)) || this.value.length == 8)
+        e.preventDefault();
+        });
+      const phone = document.querySelector("#inputPhone");
+      phone.addEventListener("keypress", function(e){
+        
+        if (!pattern.test(String.fromCharCode(e.keyCode)) || this.value.length == 11)
+       
+        e.preventDefault();
+        });
+
+};
+
+
 
            
 </script>

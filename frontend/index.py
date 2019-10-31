@@ -44,6 +44,28 @@ def signUp():
     print("json: "+ jsonSingUp)
     print("json decodificado, estraccion data name: "+ str(DecoSingUp["student"]['name']))
     return ci + email + phone + name +lastName
+
+@app.route('/signIn',methods=['POST'])
+def signIn():
+    # create user code will be here !!
+    ci = request.form['inputCi']
+    email = request.form['inputEmail']
+    # create json for singUp
+    data = {
+       "student":
+           {"ci":ci,
+            "email":email,
+            }
+    }
+   
+  
+  
+    jsonSingUp = json.dumps(data)
+    DecoSingUp = json.loads(jsonSingUp)
+
+    print("json: "+ jsonSingUp)
+    print("json decodificado, estraccion data name: "+ str(DecoSingUp["student"]['ci']))
+    return ci + email 
     
 app.run(debug =True)
     
